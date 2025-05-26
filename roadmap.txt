@@ -1,0 +1,5 @@
+Etape :
+1. Creer le front React
+2. Websocket cote front
+3. Auth reelle avec JWT
+4. RBAC & DB Users
