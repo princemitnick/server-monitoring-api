@@ -16,6 +16,10 @@ app = FastAPI(title="System Monitoring API")
 
 @app.get("/metrics")
 def read_metrics():
+    """
+    Metrics api
+    :return:
+    """
     return {
         "cpu": get_cpu_usage(),
         "memory": get_memory_usage(),
