@@ -1,6 +1,13 @@
+import datetime
+
 import psutil
 import platform
 import time
+from db import mongodb
+
+async def save_metrics(metrics: dict):
+    metrics["timestamp"] = datetime.datetime.utcnow()
+    await mongodb.metrics_collection.insert_one(metrics)
 
 def get_cpu_usage():
     return psutil.cpu_percent(interval=1)
@@ -43,3 +50,4 @@ def get_running_services():
         except Exception:
             continue
     return services
+
