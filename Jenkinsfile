@@ -13,7 +13,15 @@ pipeline {
        }
      }
 
-     stage('Inject Secrets + Create .env')
+     stage('Inject Secrets + Create .env') {
+       steps {
+         sh """
+           echo "MONGO_URI=mongodb://localhost:27017" > .env
+           echo "MONGO_DB=monitoring" >> .env
+           echo "MONGO_COLLECTION=metrics" >> .env
+         """
+       }
+     }
 
      stage('Build Docker Image') {
        steps {
@@ -21,6 +29,16 @@ pipeline {
            echo "[+] Building Docker image..."
            sh "docker build -t ${IMAGE_NAME}:latest ."
          }
+       }
+     }
+
+     stage('Deploy MongoDB') {
+       steps {
+         sh """
+           docker stop mongodb || true
+           docker rm mongodb || true
+           docker run -d --name mongodb -p 227017:227017 mongo
+         """
        }
      }
 
@@ -43,6 +61,7 @@ pipeline {
                 --name ${CONTAINER_NAME} \\
                 -p 8000:8000 \\
                 --env-file .env \\
+                --link mongodb \\
                 ${IMAGE_NAME}:latest
            """
          }
