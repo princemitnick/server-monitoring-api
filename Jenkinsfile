@@ -13,6 +13,8 @@ pipeline {
        }
      }
 
+     stage('Inject Secrets + Create .env')
+
      stage('Build Docker Image') {
        steps {
          script {
