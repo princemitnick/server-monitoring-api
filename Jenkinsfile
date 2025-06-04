@@ -37,7 +37,7 @@ pipeline {
          sh """
            docker stop mongodb || true
            docker rm mongodb || true
-           docker run -d --name mongodb -p 227017:227017 mongo
+           docker run -d --name mongodb -p 27017:27017 mongo
          """
        }
      }
