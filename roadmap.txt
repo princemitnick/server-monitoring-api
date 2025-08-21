@@ -3,3 +3,4 @@ Etape :
 2. Websocket cote front
 3. Auth reelle avec JWT
 4. RBAC & DB Users
+5. Azure Pipeline
